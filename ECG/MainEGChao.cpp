@@ -22,7 +22,6 @@ extern "C"
 
 		((NJS_TEXLIST*)GetDllData("texlist_al_stg_neut_tex"))->textures = eNeutTexCount;
 
-		LandTable* NeutTable = (LandTable*)GetDllData("objLandTableNeut");
 		NJS_OBJECT* NeutPond = (NJS_OBJECT*)GetDllData("object_gneut_nc_water_nc_water");
 		NJS_OBJECT* Falls0 = (NJS_OBJECT*)GetDllData("object_gneut_nc_fwater00_nc_fwater00");
 		NJS_OBJECT* Falls1 = (NJS_OBJECT*)GetDllData("object_gneut_nc_fwater01_nc_fwater01");
@@ -32,19 +31,18 @@ extern "C"
 		ENeutral->TextureList = &eNeutTexList;
 		ENeutral->TextureName = (char*)"al_stg_neut_tex";
 
-		LandTable* ENeutTable = (LandTable*)GetDllData("objLandTableNeut");
-		NJS_OBJECT* ENeutPond = ENeutTable->COLList[0].Model;
-		NJS_OBJECT* EFalls0 = ENeutTable->COLList[1].Model;
-		NJS_OBJECT* EFalls1 = ENeutTable->COLList[2].Model;
+		NJS_OBJECT* ENeutPond = ENeutral->COLList[0].Model;
+		NJS_OBJECT* EFalls0 = ENeutral->COLList[1].Model;
+		NJS_OBJECT* EFalls1 = ENeutral->COLList[2].Model;
 
 		const IniFile* config = new IniFile(std::string(path) + "\\config.ini");
 
 		bool wFix = config->getBool("GenSet", "WaterFix", true);
 		if (wFix)
 		{
-			ENeutTable->COLList[0].Flags &= ~0x80000000;
-			ENeutTable->COLList[1].Flags &= ~0x80000000;
-			ENeutTable->COLList[2].Flags &= ~0x80000000;
+			ENeutral->COLList[0].Flags &= ~0x80000000;
+			ENeutral->COLList[1].Flags &= ~0x80000000;
+			ENeutral->COLList[2].Flags &= ~0x80000000;
 		}
 
 		bool Set = config->getBool("GenSet", "Set", true);
